@@ -1,0 +1,59 @@
+<html>
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+<script src="https://www.youtube.com/iframe_api"></script>
+<body>
+  <div id='player'></div>
+  <button id='getTimeBtn'>Get Time</button>
+  <div id='videoStatus'></div>
+</body>
+<html>
+<script>
+  var player;
+
+  window.onYouTubeIframeAPIReady = function() {
+    player = new YT.Player('player', {
+      'height': '315',
+      'width': '560',
+      'videoId': 'bHQqvYy5KYo',
+      'events': {
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
+
+  $('#getTimeBtn').click(function() {
+    alert(player.getCurrentTime());
+  });
+
+  function onPlayerReady(event) {
+    event.target.playVideo();
+  }
+
+  function onPlayerStateChange(event) {
+    var status = '';
+
+    switch (event.data) {
+      case 0:
+        status = 'Ended';
+        break;
+      case 1:
+        status = 'Playing';
+        break;
+      case 2:
+        status = 'Paused';
+        break;
+      case 3:
+        status = 'Buffering';
+        break;
+      case 5:
+        status = 'Cued';
+        break;
+    }
+
+    $('#videoStatus').text(status);
+  }
+</script>
